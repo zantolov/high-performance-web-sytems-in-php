@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+    db:
+        image: mysql
+#        volumes:
+#            - "./docker/.data/db:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    php:
+        build: docker/php7-fpm
+        volumes:
+            - ${SYMFONY_APP_PATH}:/var/www/symfony:cached
+            - ./docker/logs/symfony:/var/www/symfony/app/logs:cached
+    nginx:
+        build: docker/nginx
+        ports:
+            - 8000:80
+        volumes_from:
+            - php
+        volumes:
+            - ./docker/logs/nginx/:/var/log/nginx:cached

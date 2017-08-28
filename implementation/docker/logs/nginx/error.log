@@ -1,0 +1,13 @@
+2017/08/28 20:51:03 [warn] 1#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:1
+2017/08/28 20:51:03 [emerg] 1#0: mkdir() "/var/lib/nginx/body" failed (13: Permission denied)
+2017/08/28 20:52:24 [warn] 1#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:1
+2017/08/28 20:52:24 [emerg] 1#0: unknown directive "group" in /etc/nginx/nginx.conf:2
+2017/08/28 20:52:56 [warn] 1#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:1
+2017/08/28 20:52:56 [emerg] 1#0: mkdir() "/var/lib/nginx/body" failed (13: Permission denied)
+2017/08/28 20:53:54 [emerg] 1#0: mkdir() "/var/lib/nginx/body" failed (13: Permission denied)
+2017/08/28 20:54:43 [warn] 1#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:1
+2017/08/28 20:54:43 [emerg] 1#0: mkdir() "/var/lib/nginx/proxy" failed (13: Permission denied)
+2017/08/28 20:55:29 [warn] 1#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:1
+2017/08/28 20:55:29 [emerg] 1#0: open() "/usr/share/nginx/off" failed (13: Permission denied)
+2017/08/28 20:55:59 [emerg] 1#0: open() "/usr/share/nginx/off" failed (13: Permission denied)
+2017/08/28 20:57:43 [emerg] 1#0: mkdir() "/var/lib/nginx/body" failed (13: Permission denied)
