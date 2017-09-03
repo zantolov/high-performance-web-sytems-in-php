@@ -16,6 +16,8 @@ RUN docker-php-ext-install pdo pdo_mysql
 # Opcache
 #RUN docker-php-ext-install opcache
 
+ADD custom.ini /usr/local/etc/php/conf.d/custom.ini
+
 RUN useradd -m symfony
 USER symfony
 
