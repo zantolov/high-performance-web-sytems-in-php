@@ -23,3 +23,6 @@ services:
             - php
         volumes:
             - ./docker/logs/nginx/:/var/log/nginx
+
+    redis:
+        image: redis

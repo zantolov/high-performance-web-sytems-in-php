@@ -33,6 +33,10 @@ framework:
     php_errors:
         log: true
 
+    cache:
+        app: cache.adapter.redis
+        default_redis_provider: "redis://redis"
+
 # Twig Configuration
 twig:
     debug: '%kernel.debug%'
