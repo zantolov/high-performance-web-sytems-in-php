@@ -17,17 +17,22 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
 
         $slugger = new Slugger();
 
-        for ($i = 0; $i < 15; $i++) {
+        $max = 100;
+
+        for ($i = 1; $i <= $max; $i++) {
             $post = new Post();
             $post->setTitle($faker->sentence);
             $slug = $slugger->slugify($post->getTitle());
             $post->setSlug($slug);
             $post->setCreatedAt($faker->dateTimeBetween('-1 month', 'now'));
-            $post->setBody($faker->realText(rand(500, 700)));
-            $post->setCategory($this->getReference('c' . (rand(0, 1))));
+            $post->setBody($faker->realText(rand(500, 1200)));
+            $post->setCategory($this->getReference('c' . (rand(1, 2))));
             $manager->persist($post);
 
-            $this->setReference('p' . $i, $post);
+            if (($i % 50) == 0 || $i == $max) {
+                $manager->flush();
+                $manager->clear();
+            }
         }
 
         $manager->flush();

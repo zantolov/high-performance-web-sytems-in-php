@@ -18,9 +18,9 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
 
         $slugger = new Slugger();
 
-        for ($i = 0; $i < 2; $i++) {
+        for ($i = 1; $i < 3; $i++) {
             $category = new Category();
-            $category->setTitle($faker->sentence);
+            $category->setTitle('category' . $i);
             $slug = $slugger->slugify($category->getTitle());
             $category->setSlug($slug);
             $category->setCreatedAt($faker->dateTimeBetween('-1 month', 'now'));

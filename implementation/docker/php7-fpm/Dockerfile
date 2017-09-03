@@ -11,15 +11,12 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer --version
 
-# Set timezone
-RUN rm /etc/localtime
-RUN ln -s /usr/share/zoneinfo/Europe/Zagreb /etc/localtime
-RUN "date"
-
-# Type docker-php-ext-install to see available extensions
 RUN docker-php-ext-install pdo pdo_mysql
 
-RUN useradd symfony
+# Opcache
+#RUN docker-php-ext-install opcache
+
+RUN useradd -m symfony
 USER symfony
 
 WORKDIR /var/www/symfony

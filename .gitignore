@@ -1,3 +1,6 @@
 .DS_Store
 .env
 .idea
+/implementation/docker/.data/
+/implementation/docker-compose.override.yml
+/implementation/docker/logs/*
