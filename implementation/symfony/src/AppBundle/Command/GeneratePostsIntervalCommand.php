@@ -4,6 +4,7 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Post;
+use Doctrine\ORM\EntityRepository;
 use Easybook\Slugger;
 use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -32,8 +33,6 @@ class GeneratePostsIntervalCommand extends ContainerAwareCommand
             ->getRepository(Category::class)
             ->findOneBy(['title' => 'category2']);
 
-        $cacheEngine = $this->getContainer()->get('cache.app');
-
         while (true) {
             $post = $this->createPost();
 
@@ -45,11 +44,11 @@ class GeneratePostsIntervalCommand extends ContainerAwareCommand
 
             $manager->persist($post);
             $manager->flush();
-            $cacheEngine->deleteItem($post->getCategory()->getTitle());
+            $this->refreshCache($post->getCategory()->getTitle());
             $manager->clear();
             $category1 = $manager->merge($category1);
             $category2 = $manager->merge($category2);
-            sleep(5);
+            sleep(1);
             gc_collect_cycles();
         }
     }
@@ -67,5 +66,35 @@ class GeneratePostsIntervalCommand extends ContainerAwareCommand
 
         return $post;
     }
+
+    private function refreshCache($categoryName)
+    {
+        $data = $this->loadPostsFromDb($categoryName);
+        $this->saveToCache($categoryName, $data);
+    }
+
+    private function loadPostsFromDb($categoryName, $maxResults = 15)
+    {
+        /** @var EntityRepository $repo */
+        $repo = $this->getContainer()->get('doctrine')->getRepository(Post::class);
+
+        $qb = $repo
+            ->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c')
+            ->where('c.title = :categoryName')
+            ->setParameter('categoryName', $categoryName)
+            ->setMaxResults($maxResults)
+            ->orderBy('p.createdAt', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    private function saveToCache($key, $value)
+    {
+        $data = $this->getContainer()->get('cache.app')->getItem($key);
+        $data->set($value);
+        $this->getContainer()->get('cache.app')->save($data);
+    }
+
 
 }
