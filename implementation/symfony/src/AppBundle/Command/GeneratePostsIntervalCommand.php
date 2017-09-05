@@ -49,7 +49,7 @@ class GeneratePostsIntervalCommand extends ContainerAwareCommand
             $manager->clear();
             $category1 = $manager->merge($category1);
             $category2 = $manager->merge($category2);
-            usleep(100000);
+            sleep(5);
             gc_collect_cycles();
         }
     }
