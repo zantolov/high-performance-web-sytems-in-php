@@ -46,7 +46,11 @@ class GeneratePostsIntervalCommand extends ContainerAwareCommand
             $manager->persist($post);
             $manager->flush();
             $cacheEngine->deleteItem($post->getCategory()->getTitle());
+            $manager->clear();
+            $category1 = $manager->merge($category1);
+            $category2 = $manager->merge($category2);
             usleep(100000);
+            gc_collect_cycles();
         }
     }
 
