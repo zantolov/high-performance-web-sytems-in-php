@@ -48,6 +48,8 @@ class GeneratePostsIntervalCommand extends ContainerAwareCommand
             $manager->clear();
             $category1 = $manager->merge($category1);
             $category2 = $manager->merge($category2);
+
+            $output->writeln('Generated post in category ' . $post->getCategory()->getTitle());
             sleep(1);
             gc_collect_cycles();
         }
